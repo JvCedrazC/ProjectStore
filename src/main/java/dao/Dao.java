@@ -1,5 +1,6 @@
 package dao;
 
+import dao.ComponentDao.ComponentDAO;
 import dao.CustomerDao.CustomerDAO;
 import dao.CustomerDao.CustomerDaoList;
 import dao.TechnicianDao.TechnicianDAO;
@@ -11,6 +12,8 @@ public class Dao{
     public static CustomerDAO customerDao;
     public static TechnicianDAO technicianDao;
     public static WorkOrderDAO workOrderDAO;
+    public static CustomerDAO customerDAO;
+    public static ComponentDAO componentDAO;
     public static CustomerDAO getCustomer(){
         if (customerDao == null){
             customerDao = new CustomerDaoList();
