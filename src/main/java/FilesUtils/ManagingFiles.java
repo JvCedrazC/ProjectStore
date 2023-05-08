@@ -1,21 +1,19 @@
 package FilesUtils;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 public class ManagingFiles {
 
-     private String filename;
+     private String fileName;
 
      public ManagingFiles(String name){
-         this.filename = name;
+         this.fileName = name;
      }
 
      public <T> void save(ArrayList<T> list){
          try {
-             FileOutputStream file = new FileOutputStream(this.filename);
+             FileOutputStream file = new FileOutputStream(this.fileName);
              ObjectOutputStream object = new ObjectOutputStream(file);
              object.writeObject(list);
              object.close();
@@ -24,7 +22,21 @@ public class ManagingFiles {
              throw new RuntimeException(e);
          }
      }
-     public <T> ArrayList<T> retrieve(ArrayList<T> list){
-         
+     public <T> ArrayList<T> retrieve(){
+         try{
+             ArrayList<T> list;
+             File file = new File(fileName);
+             if (!file.exists()){
+                 save(new ArrayList<T>());
+             }
+             FileInputStream fileStream = new FileInputStream(this.fileName);
+             ObjectInputStream objectInputStream = new ObjectInputStream(fileStream);
+             list = (ArrayList<T>) objectInputStream.readObject();
+             objectInputStream.close();
+             return list;
+
+         }catch (IOException | ClassNotFoundException exception){
+             throw new RuntimeException(exception);
+         }
      }
 }
