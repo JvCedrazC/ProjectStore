@@ -10,12 +10,11 @@ import java.util.List;
 
 public class WorkOrderDaoList implements WorkOrderDAO {
     private ManagingFiles managingFiles;
-    private ArrayList<WorkOrder> lista;
     private int nextID;
 
     public WorkOrderDaoList(){
         this.managingFiles = new ManagingFiles("workOrder.dat");
-        this.lista = this.managingFiles.retrieve();
+        ArrayList<WorkOrder>lista = this.managingFiles.retrieve();
         if (lista.size() == 0){
             nextID = lista.size()-1;
         } else{
@@ -25,14 +24,18 @@ public class WorkOrderDaoList implements WorkOrderDAO {
     //Create
     @Override
     public WorkOrder create(WorkOrder workOrder) {
+        ArrayList<WorkOrder> lista = new ArrayList<WorkOrder>();
         workOrder.setId(nextID);
         nextID++;
         lista.add(workOrder);
+        managingFiles.save(lista);
         return workOrder;
     }
     //read
     @Override
     public WorkOrder findById(int id) {
+        ArrayList<WorkOrder> lista;
+        lista = managingFiles.retrieve();
         for (WorkOrder workOrder: lista) {
             if(workOrder.getId() == id){
                 return workOrder;
@@ -43,7 +46,9 @@ public class WorkOrderDaoList implements WorkOrderDAO {
 
     @Override
     public WorkOrder findByCustomer(Customer customer) {
-        for (WorkOrder workOrder: this.lista) {
+        ArrayList<WorkOrder> lista;
+        lista = managingFiles.retrieve();
+        for (WorkOrder workOrder: lista) {
             if (workOrder.getCustomer() == customer.getId()){
                 return workOrder;
             }
@@ -53,7 +58,9 @@ public class WorkOrderDaoList implements WorkOrderDAO {
 
     @Override
     public WorkOrder findByTechnician(Technician technician) {
-        for (WorkOrder workOrder: this.lista) {
+        ArrayList<WorkOrder> lista;
+        lista = managingFiles.retrieve();
+        for (WorkOrder workOrder: lista) {
             if (workOrder.getTechnician() == technician.getId()){
                 return workOrder;
             }
