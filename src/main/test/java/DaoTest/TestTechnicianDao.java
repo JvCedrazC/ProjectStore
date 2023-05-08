@@ -50,6 +50,25 @@ public class TestTechnicianDao {
         assertEquals("Vladimir Putin", technicians.get(0).getName());
         assertEquals("Ivete Sangalo", technicians.get(1).getName());
     }
+    @Test
+    void update(){
+        Technician technician1 = new Technician(-1, "Vladimir Putin");
+        technicianDaoList.create(technician1);
+        Technician technician2 = new Technician(-1, "Ivete Sangalo");
+        technicianDaoList.create(technician2);
+        technician2.setName("Marta");
+        technicianDaoList.update(technician2);
 
+        assertEquals("Marta", technicianDaoList.findById(1).getName());
+    }
 
+    @Test
+    void deleteById(){
+        Technician technician1 = new Technician(-1, "Vladimir Putin");
+        technicianDaoList.create(technician1);
+        Technician technician2 = new Technician(-1, "Ivete Sangalo");
+        technicianDaoList.create(technician2);
+        technicianDaoList.deleteById(1);
+        assertEquals(1, technicianDaoList.findMany().size());
+    }
 }
