@@ -1,5 +1,6 @@
 package dao.WorkOrderDao;
 
+import FilesUtils.ManagingFiles;
 import Model.Customer;
 import Model.Technician;
 import Model.WorkOrder;
@@ -8,12 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WorkOrderDaoList implements WorkOrderDAO {
-    private List<WorkOrder> lista;
+    private ManagingFiles managingFiles;
+    private ArrayList<WorkOrder> lista;
     private int nextID;
 
     public WorkOrderDaoList(){
-        this.lista = new ArrayList<WorkOrder>();
-        this.nextID = 0;
+        this.managingFiles = new ManagingFiles("workOrder.dat");
+        this.lista = this.managingFiles.retrieve();
+        if (lista.size() == 0){
+            nextID = lista.size()-1;
+        } else{
+            nextID = 0;
+        }
     }
     //Create
     @Override
@@ -97,12 +104,6 @@ public class WorkOrderDaoList implements WorkOrderDAO {
         for (int i = 0; i < this.lista.size();i++){
             this.lista.get(i).setId(i);
         }
-    }
-    public void save(){
-
-    }
-    public void retrieve(){
-
     }
 
 }
