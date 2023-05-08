@@ -71,4 +71,13 @@ public class TestTechnicianDao {
         technicianDaoList.deleteById(1);
         assertEquals(1, technicianDaoList.findMany().size());
     }
+    @Test
+    void deleteMany(){
+        Technician technician1 = new Technician(-1, "Vladimir Putin");
+        technicianDaoList.create(technician1);
+        Technician technician2 = new Technician(-1, "Ivete Sangalo");
+        technicianDaoList.create(technician2);
+        technicianDaoList.deleteMany();
+        assertEquals(0, technicianDaoList.findMany().size());
+    }
 }
