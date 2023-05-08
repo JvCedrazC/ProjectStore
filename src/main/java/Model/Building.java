@@ -1,7 +1,8 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-public class Building extends Services{
+public class Building extends Services {
     private static ArrayList<Component> usedComponents = new ArrayList<Component>();
     //Class' Methods
     public Building (ArrayList<Component> component){
