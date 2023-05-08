@@ -3,7 +3,7 @@ package FilesUtils;
 import java.io.*;
 import java.util.ArrayList;
 
-public class ManagingFiles {
+public class ManagingFiles implements Serializable {
 
      private String fileName;
 
