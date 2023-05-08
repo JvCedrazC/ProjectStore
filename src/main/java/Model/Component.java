@@ -1,6 +1,8 @@
 package Model;
 
-public class Component {
+import java.io.Serializable;
+
+public class Component implements Serializable {
     private int id;
     private Double cost;
     private Double price;
