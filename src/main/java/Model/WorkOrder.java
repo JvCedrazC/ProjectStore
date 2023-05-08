@@ -1,9 +1,10 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkOrder{
+public class WorkOrder implements Serializable {
         private int id;
         private String status;
         private Double price = 0.0;
