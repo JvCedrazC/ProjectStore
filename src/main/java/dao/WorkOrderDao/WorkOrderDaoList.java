@@ -5,6 +5,7 @@ import Model.Customer;
 import Model.Technician;
 import Model.WorkOrder;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +69,9 @@ public class WorkOrderDaoList implements WorkOrderDAO {
     }
     public ArrayList<WorkOrder> findMany(){
         ArrayList<WorkOrder> listWorkOrder = new ArrayList<WorkOrder>();
-        for (Object o : this.lista) {
+        ArrayList<WorkOrder> lista;
+        lista = managingFiles.retrieve();
+        for (Object o : lista) {
             listWorkOrder.add((WorkOrder) o);
         }
         return listWorkOrder;
@@ -76,29 +79,38 @@ public class WorkOrderDaoList implements WorkOrderDAO {
 
     //Update
     public void update(WorkOrder workOrder){
-        for (int i = 0; i < this.lista.size(); i++) {
-            if (this.lista.get(i).getId() == workOrder.getId()) {
-                this.lista.set(i, workOrder);
+        ArrayList<WorkOrder> lista;
+        lista = managingFiles.retrieve();
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getId() == workOrder.getId()) {
+                lista.set(i, workOrder);
                 return;
             }
         }
+        managingFiles.save(lista);
     }
     //Delete
     public void deleteMany(){
-        this.lista = new ArrayList<WorkOrder>();
+        ArrayList<WorkOrder> lista = new ArrayList<WorkOrder>();
+        managingFiles.save(lista);
         this.nextID =  0;
+
     }
     public void deleteById(int id){
-        for (int i = 0; i < this.lista.size(); i++) {
-            if (this.lista.get(i).getId() == id) {
-                this.lista.remove(i);
+        ArrayList<WorkOrder> lista;
+        lista = managingFiles.retrieve();
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getId() == id) {
+                lista.remove(i);
                 break;
             }
         }
-        changeId();
+        changeId(lista);
     }
 
     public WorkOrder getNewAvailableOrder(){
+        ArrayList<WorkOrder> lista;
+        lista = managingFiles.retrieve();
         for (WorkOrder i: lista) {
             if (i.getStatus() == "Aberta") {
                 return i;
@@ -107,10 +119,11 @@ public class WorkOrderDaoList implements WorkOrderDAO {
         return null;
 
     }
-    private void changeId(){
-        for (int i = 0; i < this.lista.size();i++){
-            this.lista.get(i).setId(i);
+    private void changeId(ArrayList<WorkOrder> lista){
+        for (int i = 0; i < lista.size();i++){
+            lista.get(i).setId(i);
         }
+        managingFiles.save(lista);
     }
 
 }
