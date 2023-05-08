@@ -61,14 +61,21 @@ public class TestCustomerDao {
         Customer customer2 = new Customer(-1, "Lebron James", "Lebron_LA_Lakers_23@hotmail.com");
         customerDaoList.create(customer1);
         customerDaoList.create(customer2);
+        customerDaoList.deleteById(0);
+        assertEquals("Lebron James", customerDaoList.findById(0).getName());
+        assertEquals(1, customerDaoList.findMany().size());
 
     }
     @Test
     void deleteMany(){
+        ArrayList<Customer> customers = new ArrayList<Customer>();
         Customer customer1 = new Customer(-1, "Neymar jr", "NeymarJunior@gmail.com");
         Customer customer2 = new Customer(-1, "Lebron James", "Lebron_LA_Lakers_23@hotmail.com");
         customerDaoList.create(customer1);
         customerDaoList.create(customer2);
+        customerDaoList.deleteMany();
+        customers = customerDaoList.findMany();
+        assertEquals(0, customers.size());
 
     }
 }
