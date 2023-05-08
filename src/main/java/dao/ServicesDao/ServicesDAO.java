@@ -5,4 +5,6 @@ import dao.CRUD;
 
 public interface ServicesDAO extends CRUD {
     void create(Services services);
+    Services findById(int id);
+
 }
