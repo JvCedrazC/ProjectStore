@@ -87,4 +87,5 @@ public class TestTechnicianDao {
         technicianDaoList.deleteMany();
         assertEquals(0, technicianDaoList.findMany().size());
     }
+
 }
