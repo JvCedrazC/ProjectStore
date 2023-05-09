@@ -47,5 +47,11 @@ public class TestComponentDao {
         componentList.deleteById(0);
         assertEquals(1, componentList.findMany().size());
     }
+    @Test
+    public void deleteMany(){
+        ComponentDaoList componentList = new ComponentDaoList();
+        componentList.deleteMany();
+        assertEquals(0, componentList.findMany().size());
+    }
 
 }
