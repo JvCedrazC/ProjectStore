@@ -1,5 +1,6 @@
 package DaoTest;
 
+import FilesUtils.ManagingFiles;
 import Model.Customer;
 import Model.Technician;
 import dao.CustomerDao.CustomerDaoList;
@@ -17,12 +18,14 @@ public class TestCustomerDao {
     public CustomerDaoList customerDaoList = new CustomerDaoList();
     @Test
     void create(){
+        customerDaoList.deleteMany();
         Customer customer = new Customer(-1, "Neymar jr", "NeymarJunior@gmail.com");
         customerDaoList.create(customer);
         assertEquals("Neymar jr", customerDaoList.findById(0).getName());
     }
     @Test
     void findById(){
+        customerDaoList.deleteMany();
         Customer customer1 = new Customer(-1, "Neymar jr", "NeymarJunior@gmail.com");
         Customer customer2 = new Customer(-1, "Lebron James", "Lebron_LA_Lakers_23@hotmail.com");
         customerDaoList.create(customer1);
@@ -34,6 +37,7 @@ public class TestCustomerDao {
 
     @Test
     void findMany(){
+        customerDaoList.deleteMany();
         ArrayList<Customer> customers = new ArrayList<Customer>();
         Customer customer1 = new Customer(-1, "Neymar jr", "NeymarJunior@gmail.com");
         Customer customer2 = new Customer(-1, "Lebron James", "Lebron_LA_Lakers_23@hotmail.com");
@@ -45,6 +49,7 @@ public class TestCustomerDao {
     }
     @Test
     void update(){
+        customerDaoList.deleteMany();
         Customer customer1 = new Customer(-1, "Neymar jr", "NeymarJunior@gmail.com");
         Customer customer2 = new Customer(-1, "Lebron James", "Lebron_LA_Lakers_23@hotmail.com");
         customerDaoList.create(customer1);
@@ -57,6 +62,7 @@ public class TestCustomerDao {
 
     @Test
     void deleteById(){
+        customerDaoList.deleteMany();
         Customer customer1 = new Customer(-1, "Neymar jr", "NeymarJunior@gmail.com");
         Customer customer2 = new Customer(-1, "Lebron James", "Lebron_LA_Lakers_23@hotmail.com");
         customerDaoList.create(customer1);
