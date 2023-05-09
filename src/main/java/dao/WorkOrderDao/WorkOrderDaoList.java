@@ -12,12 +12,13 @@ import java.util.List;
 public class WorkOrderDaoList implements WorkOrderDAO {
     private ManagingFiles managingFiles;
     private int nextID;
+    private ArrayList<WorkOrder>lista;
 
     public WorkOrderDaoList(){
-        this.managingFiles = new ManagingFiles("workOrder.dat");
-        ArrayList<WorkOrder>lista = this.managingFiles.retrieve();
+        this.managingFiles = new ManagingFiles("workOrder.bin");
+        lista = this.managingFiles.retrieve();
         if (lista.size() == 0){
-            nextID = lista.size()-1;
+            nextID = lista.size();
         } else{
             nextID = 0;
         }
@@ -25,18 +26,15 @@ public class WorkOrderDaoList implements WorkOrderDAO {
     //Create
     @Override
     public WorkOrder create(WorkOrder workOrder) {
-        ArrayList<WorkOrder> lista = new ArrayList<WorkOrder>();
         workOrder.setId(nextID);
         nextID++;
         lista.add(workOrder);
-        managingFiles.save(lista);
+        save(lista);
         return workOrder;
     }
     //read
     @Override
     public WorkOrder findById(int id) {
-        ArrayList<WorkOrder> lista;
-        lista = managingFiles.retrieve();
         for (WorkOrder workOrder: lista) {
             if(workOrder.getId() == id){
                 return workOrder;
@@ -47,8 +45,6 @@ public class WorkOrderDaoList implements WorkOrderDAO {
 
     @Override
     public WorkOrder findByCustomer(Customer customer) {
-        ArrayList<WorkOrder> lista;
-        lista = managingFiles.retrieve();
         for (WorkOrder workOrder: lista) {
             if (workOrder.getCustomer() == customer.getId()){
                 return workOrder;
@@ -59,8 +55,6 @@ public class WorkOrderDaoList implements WorkOrderDAO {
 
     @Override
     public WorkOrder findByTechnician(Technician technician) {
-        ArrayList<WorkOrder> lista;
-        lista = managingFiles.retrieve();
         for (WorkOrder workOrder: lista) {
             if (workOrder.getTechnician() == technician.getId()){
                 return workOrder;
@@ -69,8 +63,6 @@ public class WorkOrderDaoList implements WorkOrderDAO {
     }
     public ArrayList<WorkOrder> findMany(){
         ArrayList<WorkOrder> listWorkOrder = new ArrayList<WorkOrder>();
-        ArrayList<WorkOrder> lista;
-        lista = managingFiles.retrieve();
         for (Object o : lista) {
             listWorkOrder.add((WorkOrder) o);
         }
@@ -79,8 +71,6 @@ public class WorkOrderDaoList implements WorkOrderDAO {
 
     //Update
     public void update(WorkOrder workOrder){
-        ArrayList<WorkOrder> lista;
-        lista = managingFiles.retrieve();
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(i).getId() == workOrder.getId()) {
                 lista.set(i, workOrder);
@@ -91,14 +81,12 @@ public class WorkOrderDaoList implements WorkOrderDAO {
     }
     //Delete
     public void deleteMany(){
-        ArrayList<WorkOrder> lista = new ArrayList<WorkOrder>();
-        managingFiles.save(lista);
+        lista = new ArrayList<WorkOrder>();
         this.nextID =  0;
+        save(lista);
 
     }
     public void deleteById(int id){
-        ArrayList<WorkOrder> lista;
-        lista = managingFiles.retrieve();
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(i).getId() == id) {
                 lista.remove(i);
@@ -106,11 +94,10 @@ public class WorkOrderDaoList implements WorkOrderDAO {
             }
         }
         changeId(lista);
+        save(lista);
     }
 
     public WorkOrder getNewAvailableOrder(){
-        ArrayList<WorkOrder> lista;
-        lista = managingFiles.retrieve();
         for (WorkOrder i: lista) {
             if (i.getStatus() == "Aberta") {
                 return i;
@@ -123,7 +110,10 @@ public class WorkOrderDaoList implements WorkOrderDAO {
         for (int i = 0; i < lista.size();i++){
             lista.get(i).setId(i);
         }
-        managingFiles.save(lista);
+    }
+
+    public void save(ArrayList<WorkOrder> workOrders){
+        managingFiles.save(workOrders);
     }
 
 }
