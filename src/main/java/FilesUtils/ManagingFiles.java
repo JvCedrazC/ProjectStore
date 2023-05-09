@@ -30,13 +30,13 @@ public class ManagingFiles implements Serializable {
                  save(new ArrayList<T>());
              }
              FileInputStream fileStream = new FileInputStream(this.fileName);
-             ObjectInputStream objectInputStream = new ObjectInputStream(fileStream);
-             list = (ArrayList<T>) objectInputStream.readObject();
-             objectInputStream.close();
+             ObjectInputStream os = new ObjectInputStream(fileStream);
+             list = (ArrayList<T>) os.readObject();
+             os.close();
              return list;
-
          }catch (IOException | ClassNotFoundException exception){
              throw new RuntimeException(exception);
          }
+
      }
 }
