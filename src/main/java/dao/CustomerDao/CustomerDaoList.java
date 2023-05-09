@@ -1,29 +1,39 @@
 package dao.CustomerDao;
 
+import FilesUtils.ManagingFiles;
 import Model.Customer;
+import Model.Technician;
 
 import java.util.ArrayList;
 import java.util.List;
 public class CustomerDaoList implements CustomerDAO{
-    private List<Customer> lista;
+    private ManagingFiles managingFiles;
     private int nextID;
 
     public CustomerDaoList(){
-        this.lista = new ArrayList<Customer>();
-        this.nextID = 0;
+        this.managingFiles = new ManagingFiles("Customer.bin");
+        ArrayList<Customer> lista = this.managingFiles.retrieve();
+        if (lista.size() == 0){
+            nextID = lista.size();
+        } else{
+            nextID = 0;
+        }
     }
 
     @Override
     public Customer create(Customer customer){
+        ArrayList<Customer> lista = this.managingFiles.retrieve();
         customer.setId(nextID);
         nextID++;
-        this.lista.add(customer);
+        lista.add(customer);
+        managingFiles.save(lista);
         return customer;
     }
 
     @Override
     public Customer findById(int id) {
-        for (Customer customer: this.lista) {
+        ArrayList<Customer> lista = this.managingFiles.retrieve();
+        for (Customer customer: lista) {
             if (customer.getId() == id){
                 return customer;
             }
@@ -31,8 +41,9 @@ public class CustomerDaoList implements CustomerDAO{
     }
     @Override
     public ArrayList<Customer> findMany(){
+        ArrayList<Customer> lista = this.managingFiles.retrieve();
         ArrayList<Customer> listCustomer = new ArrayList<Customer>();
-        for (Object o : this.lista) {
+        for (Object o : lista) {
             listCustomer.add((Customer) o);
         }
         return listCustomer;
@@ -40,30 +51,36 @@ public class CustomerDaoList implements CustomerDAO{
 
     @Override
     public void update(Customer customer){
-        for (int i = 0; i < this.lista.size(); i++) {
-            if (this.lista.get(i).getId() == customer.getId()) {
-                this.lista.set(i, customer);
+        ArrayList<Customer> lista = this.managingFiles.retrieve();
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getId() == customer.getId()) {
+                lista.set(i, customer);
+                managingFiles.save(lista);
                 return;
             }
         }
     }
     @Override
     public void deleteById(int id){
-        for (int i = 0; i < this.lista.size(); i++) {
-            if (this.lista.get(i).getId() == id) {
-                this.lista.remove(i);
+        ArrayList<Customer> lista = this.managingFiles.retrieve();
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getId() == id) {
+                lista.remove(i);
                 break;
             }
         }
-       changeId();
+        changeId(lista);
+        managingFiles.save(lista);
     }
     public void deleteMany(){
-       this.lista = new ArrayList<Customer>();
+       ArrayList<Customer> lista = new ArrayList<Customer>();
        this.nextID =  0;
+       managingFiles.save(lista);
     }
-    private void changeId(){
-        for (int i = 0; i < this.lista.size();i++){
-            this.lista.get(i).setId(i);
+    private void changeId(ArrayList<Customer> lista){
+        for (int i = 0; i < lista.size();i++){
+            lista.get(i).setId(i);
         }
+        managingFiles.save(lista);
     }
 }
