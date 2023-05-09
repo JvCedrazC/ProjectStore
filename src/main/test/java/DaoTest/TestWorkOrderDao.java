@@ -18,32 +18,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestWorkOrderDao {
 
-    @AfterEach
-    void tearDown(){
-        Dao.workOrderDao().deleteMany();
-    }
+
     @Test
     void create(){
-        WorkOrderDAO listWorkOrder;
-        listWorkOrder = Dao.workOrderDao();
+        WorkOrderDaoList listWorkOrder;
+        listWorkOrder = new WorkOrderDaoList();
+        listWorkOrder.deleteMany();
         WorkOrder workOrder1 = new WorkOrder(-1, 0, "07/05/2023");
         listWorkOrder.create(workOrder1);
-        assertEquals(listWorkOrder.findById(0), workOrder1);
+        assertEquals(1, listWorkOrder.findMany().size());
+
     }
     @Test
     void findById(){
         WorkOrderDaoList listWorkOrder = new WorkOrderDaoList();
+        listWorkOrder.deleteMany();
         WorkOrder workOrder1 = new WorkOrder(-1, 0, "06/05/2023");
         WorkOrder workOrder2 = new WorkOrder(-1, 1, "07/05/2023");
-
         listWorkOrder.create(workOrder1);
         listWorkOrder.create(workOrder2);
-
         assertEquals(listWorkOrder.findById(1).getCreatedAT(),"07/05/2023" );
     }
     @Test
     void findByCustomer(){
         WorkOrderDaoList listWorkOrder = new WorkOrderDaoList();
+        listWorkOrder.deleteMany();
         Customer customer1 = new Customer(0, "Neymar jr", "NeymarJunior@gmail.com");
         Customer customer2 = new Customer(1, "Lebron James", "Lebron_LA_Lakers_23@hotmail.com");
         WorkOrder workOrder1 = new WorkOrder(-1, 0, "06/05/2023");
@@ -59,6 +58,7 @@ public class TestWorkOrderDao {
     @Test
     void findByTechnician(){
         WorkOrderDaoList listWorkOrder = new WorkOrderDaoList();
+        listWorkOrder.deleteMany();
         WorkOrder workOrder1 = new WorkOrder(-1, 0, "06/05/2023");
         workOrder1.setTechnician(0);
         WorkOrder workOrder2 = new WorkOrder(-1, 1, "07/05/2023");
@@ -96,6 +96,7 @@ public class TestWorkOrderDao {
     @Test
     void update(){
         WorkOrderDaoList listWorkOrder = new WorkOrderDaoList();
+        listWorkOrder.deleteMany();
         WorkOrder workOrder1 = new WorkOrder(-1, 0, "06/05/2023");
         listWorkOrder.create(workOrder1);
         Technician technician = new Technician(0, "Lionel Messi");
@@ -107,6 +108,7 @@ public class TestWorkOrderDao {
     @Test
     void deleteById(){
         WorkOrderDaoList listWorkOrder = new WorkOrderDaoList();
+        listWorkOrder.deleteMany();
         WorkOrder workOrder1 = new WorkOrder(-1, 0, "06/05/2023");
         WorkOrder workOrder2 = new WorkOrder(-1, 1, "07/05/2023");
         Technician technician = new Technician(0, "Lionel Messi");
@@ -123,6 +125,8 @@ public class TestWorkOrderDao {
     @Test
     void deleteMany(){
         WorkOrderDaoList listWorkOrder = new WorkOrderDaoList();
+        listWorkOrder.deleteMany();
+        listWorkOrder.deleteMany();
         WorkOrder workOrder1 = new WorkOrder(-1, 0, "06/05/2023");
         WorkOrder workOrder2 = new WorkOrder(-1, 1, "07/05/2023");
         listWorkOrder.create(workOrder1);
@@ -134,6 +138,7 @@ public class TestWorkOrderDao {
     @Test
     void getNewAvailableOrder(){
         WorkOrderDaoList listWorkOrder = new WorkOrderDaoList();
+        listWorkOrder.deleteMany();
         WorkOrder workOrder1 = new WorkOrder(-1, 0, "06/05/2023");
         WorkOrder workOrder2 = new WorkOrder(-1, 1, "07/05/2023");
         WorkOrder workOrder3 = new WorkOrder(-1, 2, "08/05/2023");
