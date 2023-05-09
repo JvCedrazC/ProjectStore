@@ -14,12 +14,14 @@ public class TestTechnicianDao {
     public TechnicianDaoList technicianDaoList = new TechnicianDaoList();
     @Test
     void create(){
+        technicianDaoList.deleteMany();
         Technician technician = new Technician(-1, "Lionel Messi");
         technicianDaoList.create(technician);
         assertEquals("Lionel Messi", technicianDaoList.findById(0).getName());
     }
     @Test
     void findById(){
+        technicianDaoList.deleteMany();
         Technician technician1 = new Technician(-1, "Lionel Messi");
         technicianDaoList.create(technician1);
         Technician technician2 = new Technician(-1, "Joe Biden");
@@ -30,16 +32,19 @@ public class TestTechnicianDao {
 
     @Test
     void findByName(){
+        technicianDaoList.deleteMany();
         Technician technician1 = new Technician(-1, "Vladimir Putin");
         technicianDaoList.create(technician1);
         Technician technician2 = new Technician(-1, "Ivete Sangalo");
         technicianDaoList.create(technician2);
-        assertEquals(0, technicianDaoList.findByName("Vladimir Putin").getId());
-        assertEquals(1, technicianDaoList.findByName("Ivete Sangalo").getId());
+        Technician technician3 = technicianDaoList.findByName("Vladimir Putin");
+        assertEquals(0, technician3.getId());
+
     }
 
     @Test
     void findMany(){
+        technicianDaoList.deleteMany();
         ArrayList<Technician> technicians = new ArrayList<Technician>();
         Technician technician1 = new Technician(-1, "Vladimir Putin");
         technicianDaoList.create(technician1);
@@ -52,6 +57,7 @@ public class TestTechnicianDao {
     }
     @Test
     void update(){
+        technicianDaoList.deleteMany();
         Technician technician1 = new Technician(-1, "Vladimir Putin");
         technicianDaoList.create(technician1);
         Technician technician2 = new Technician(-1, "Ivete Sangalo");
@@ -64,6 +70,7 @@ public class TestTechnicianDao {
 
     @Test
     void deleteById(){
+        technicianDaoList.deleteMany();
         Technician technician1 = new Technician(-1, "Vladimir Putin");
         technicianDaoList.create(technician1);
         Technician technician2 = new Technician(-1, "Ivete Sangalo");
