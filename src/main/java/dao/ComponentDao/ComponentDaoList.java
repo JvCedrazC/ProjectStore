@@ -65,10 +65,11 @@ public class ComponentDaoList implements ComponentDAO{
         for (int i = 0; i < lista.size(); i++) {
             if (lista.get(i).getId() == component.getId()) {
                 lista.set(i, component);
+                managingFiles.save(lista);
                 return;
             }
         }
-        managingFiles.save(lista);
+
     }
     public void deleteMany(){
         ArrayList<Component> lista  = new ArrayList<Component>();
