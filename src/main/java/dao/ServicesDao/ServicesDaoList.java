@@ -1,13 +1,15 @@
 package dao.ServicesDao;
 
+import FilesUtils.ManagingFiles;
+import Model.Services;
 import javafx.concurrent.Service;
 
 import java.util.ArrayList;
 
 public class ServicesDaoList  {
-    private ArrayList<Service> listServices = new ArrayList<Service>();
-    public ServicesDaoList(ArrayList<Service> listServices){
-        this.listServices = listServices;
+    private ManagingFiles managingFiles;
+    public ServicesDaoList(){
+
 
     }
 
