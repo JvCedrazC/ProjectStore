@@ -5,13 +5,14 @@ import java.util.ArrayList;
 public class Building extends Services {
     private static ArrayList<Component> usedComponents = new ArrayList<Component>();
     //Class' Methods
-    public Building (ArrayList<Component> component){
+    public Building (ArrayList<Component> component, int id){
         for (int i = 0; i < component.size();i++){
             Component x =addComponent(component.get(i));
             System.out.println("Component added: " + x.getName()+"\nComponent ID:"+ x.getId());
         }
         calculatePrice();
         calculateCost();
+        setWorkOrderId(id);
 
     }
     public static ArrayList<Component> getUsedComponents() {
@@ -35,6 +36,9 @@ public class Building extends Services {
             total += usedComponents.get(i).getCost();
         }
         setCost(total);
+    }
+    private void defineWorkOrderId(int id){
+        setWorkOrderId(id);
     }
 
 }
