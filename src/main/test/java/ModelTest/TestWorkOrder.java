@@ -31,7 +31,7 @@ public class TestWorkOrder {
         listPrograms.add(program2);
         listPrograms.add(program3);
 
-        Building building = new Building(listComponents);
+        Building building = new Building(listComponents, 0);
         Cleaning cleaning = new Cleaning(); //70 reais
         Instalation instalation = new Instalation(listPrograms, 10.0, 0.0);
 
@@ -76,7 +76,7 @@ public class TestWorkOrder {
         listPrograms.add(program2);
         listPrograms.add(program3);
 
-        Building building = new Building(listComponents);
+        Building building = new Building(listComponents, 0);
         Cleaning cleaning = new Cleaning(); //70 reais
         Instalation instalation = new Instalation(listPrograms, 10.0, 0.0);
 
