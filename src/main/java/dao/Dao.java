@@ -1,6 +1,7 @@
 package dao;
 
 import dao.ComponentDao.ComponentDAO;
+import dao.ComponentDao.ComponentDaoList;
 import dao.CustomerDao.CustomerDAO;
 import dao.CustomerDao.CustomerDaoList;
 import dao.TechnicianDao.TechnicianDAO;
@@ -12,7 +13,6 @@ public class Dao{
     public static CustomerDAO customerDao;
     public static TechnicianDAO technicianDao;
     public static WorkOrderDAO workOrderDAO;
-    public static CustomerDAO customerDAO;
     public static ComponentDAO componentDAO;
     public static CustomerDAO getCustomer(){
         if (customerDao == null){
@@ -31,6 +31,12 @@ public class Dao{
             workOrderDAO = new WorkOrderDaoList();
         }
         return workOrderDAO;
+    }
+    public static ComponentDAO getComponentDao(){
+        if (componentDAO == null){
+            componentDAO = new ComponentDaoList();
+        }
+        return componentDAO;
     }
 
 }
